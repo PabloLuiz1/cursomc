@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,20 +17,24 @@ import lombok.Setter;
 @Setter
 
 @NoArgsConstructor
-@AllArgsConstructor
 
 @Entity
-public class Cidade implements Serializable {
+public class Endereco implements Serializable{
 	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
+	private String logradouro;
+	private String numero;
+	private String complemento;
+	private String bairro;
+	private String cep;
 	@ManyToOne
-	@JoinColumn(name = "estado_id")
-	private Estado estado;
-	
+	@JoinColumn(name = "cliente_id")
+	private Cliente cliente;
+	@ManyToOne
+	@JoinColumn(name = "cidade_id")
+	private Cidade cidade;
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,13 +50,26 @@ public class Cidade implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cidade other = (Cidade) obj;
+		Endereco other = (Endereco) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public Endereco(Integer id, String logradouro, String numero, String complemento, String bairro, String cep,
+			Cliente cliente, Cidade cidade) {
+		super();
+		this.id = id;
+		this.logradouro = logradouro;
+		this.numero = numero;
+		this.complemento = complemento;
+		this.bairro = bairro;
+		this.cep = cep;
+		this.cliente = cliente;
+		this.cidade = cidade;
 	}
 	
 	
